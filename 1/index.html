@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <h1>Weather APP</h1>
+        <p>
+            Lütfen hava durumunu öğrenmek istediğiniz şehri giriniz. Örneğin: Alanya
+        </p>
+      </div>
+      <div class="box">
+        <input type="text" id="city" placeholder="Please write your city" required />
+        <button id="getWeather">Göster</button>
+      </div>
+
+      <div class="box" id="weatherResult">Yükleniyor...</div>
+    </div>
+
+    <script>
+      const getWeather = document.getElementById("getWeather");
+      const city = document.getElementById("city");
+      const weatherResult = document.getElementById("weatherResult");
+
+      getWeather.addEventListener("click", () => {
+        const cityName = city.value;
+
+        
+
+        fetch(
+          `http://api.weatherapi.com/v1/current.json?key=ef64c16ca06744a1b1d190550240603&q=${cityName}&aqi=yes`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              weatherResult.innerHTML = `
+                <h2>${data.location.name}</h2>
+                <p>${data.current.condition.text}</p>
+                <img src="${data.current.condition.icon}" alt="${data.current.condition.text}" />
+                <p>${data.current.temp_c}°C</p>
+              `;
+            })
+          .catch((err) => {
+            console.log(err);
+            weatherResult.innerHTML = "Bir hata oluştu";
+          });
+      });
+    </script>
+
+
+
+
+<style>
+    body{
+        background: url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=800') no-repeat center center/cover;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    
+    .box {
+        text-align: center;
+        background-color: rgba(35, 35, 35, 0.65);
+        color: #fafafa;
+        border-radius: 1rem;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+        margin: 1rem;
+        width: 80%;
+    }
+
+    .box input,
+    .box button{
+        color: #252525 !important;
+        padding: 1rem .75rem;
+        margin: 0.5rem;
+        border-radius: 0.15rem;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .box button{
+        cursor: pointer;
+    }
+
+    .box button:hover{
+        background-color: #252525;
+        color: #fafafa;
+
+    #weatherResult {
+        text-align: center;
+    }
+
+    #weatherResult img {
+        width: 100px;
+    }
+</style>
+  </body>
+</html>
