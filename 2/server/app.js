@@ -6,6 +6,15 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.get('/users', (req, res) => {
+    res.json({
+        users: [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' },
+        ],
+    });
+});
+
 
 
 app.listen(port, () => {
