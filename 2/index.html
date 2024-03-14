@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Links App</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="profile-container">
+            <div class="profile">
+                <img src="https://picsum.photos/100/100" class="profile-img" id="profile-img" alt="profile" />
+                <h2 class="name" id="name">Mahmut Tuncer</h2>
+                <p id="location">Yozgat</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com" target="_blank">Facebook</a>
+                    <a href="https://www.twitter.com" target="_blank">Twitter</a>
+                    <a href="https://www.instagram.com" target="_blank">Instagram</a>
+                    <a href="https://www.linkedin.com" target="_blank">Linkedin</a>
+                </div>
+
+                <button id="get-random-user-button">Get Random User</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const name = document.getElementById('name');
+        const userlocation = document.getElementById('location');
+        const profileImg = document.getElementById('profile-img');
+        const getUser = document.getElementById('get-random-user-button');
+
+        getUser.addEventListener('click', () => {
+            fetch('https://randomuser.me/api/')
+                .then(res => res.json())
+                .then(data => {
+                    const user = data.results[0];
+                    name.textContent = `${user.name.first} ${user.name.last}`;
+                    userlocation.textContent = user.location.city;
+                    profileImg.src = user.picture.large;
+                });
+        });
+
+
+    </script>
+
+
+    <style>
+
+        #get-random-user-button{
+            padding: 1rem 1.5rem;
+            background-color: #62037c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ;
+        }
+
+        #get-random-user-button:hover{
+            background-color: #7d0d9b;
+        }
+
+        body{
+            background: linear-gradient(90deg, #045eb1, #c80d77);
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container{
+            width: 300px;
+            background-color: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 0 1rem .5rem rgba(0, 0, 0, 0.3);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .profile-img{
+            border: 3px solid #62037c;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+      
+
+        .social-links{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a{
+            display: inline-block;
+            margin: 5px;
+            padding: 1rem 1.5rem;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover{
+            background-color: #555;
+        }
+    </style>
+    
+</body>
+</html>
